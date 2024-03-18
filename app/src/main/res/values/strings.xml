@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">TesDanaMon</string>
     <string name="title_buildsrc">Module Title</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">Welcome</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="list_user">List User</string>
+    <string name="id">ID:</string>
+    <string name="username_title">Username:</string>
+    <string name="email_title">Email:</string>
+    <string name="role">Role:</string>
+    <string name="error_login">Eror Login</string>
+    <string name="error_register">Eror Register</string>
 </resources>

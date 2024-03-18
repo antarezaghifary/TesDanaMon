@@ -14,7 +14,7 @@ object Versions {
     val okhttpInterceptor = "5.0.0-alpha.3"
     val chucker = "3.5.2"
     val rxAndroid = "3.0.0"
-    val rxJava = "3.0.7"
+    val rxJava = "3.1.2"
     val rxBinding = "3.0.0"
     val glide = "4.12.0"
     val prettyTime = "4.0.4.Final"
@@ -25,6 +25,11 @@ object Versions {
     val room = "2.5.1"
     val androidJunit = "1.1.3"
     val paging = "3.1.1"
+    val koin = "3.4.2"
+    val startup = "1.1.0"
+    val rxKotlin ="3.0.1"
+    val extAdd = "3.19.0"
+    val roomRx3 = "2.6.1"
 
 }
 
@@ -40,6 +45,7 @@ object Deps {
     val navigationIu = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    val rxJava2 = "com.squareup.retrofit2:adapter-rxjava3:${Versions.retrofit}"
     val converterGson = "com.squareup.retrofit2:converter-gson:${Versions.gsonConverter}"
     val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     val okhttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpInterceptor}"
@@ -47,6 +53,7 @@ object Deps {
     val chuckerNoop = "com.github.chuckerteam.chucker:library-no-op:${Versions.chucker}"
     val rxAndroid = "io.reactivex.rxjava3:rxandroid:${Versions.rxAndroid}"
     val rxJava = "io.reactivex.rxjava3:rxjava:${Versions.rxJava}"
+    val rxKotlin = "io.reactivex.rxjava3:rxkotlin:${Versions.rxKotlin}"
     val rxBinding = "com.jakewharton.rxbinding3:rxbinding:${Versions.rxBinding}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
@@ -56,13 +63,16 @@ object Deps {
     val hiltAndroidCompiler = "androidx.hilt:hilt-compiler:${Versions.hilt}"
     val room = "androidx.room:room-ktx:${Versions.room}"
     val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
-    val roomRxJava = "androidx.room:room-rxjava3:${Versions.roomRx}"
+    val roomRxJava = "androidx.room:room-ktx:${Versions.roomRx}"
     val roomPaging = "androidx.room:room-paging:${Versions.roomPaging}"
     val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     val androidJunit = "androidx.test.ext:junit:${Versions.androidJunit}"
     val pagingRuntime = "androidx.paging:paging-runtime-ktx:${Versions.paging}"
     val pagingRxJava = "androidx.paging:paging-rxjava3:${Versions.paging}"
-
+    val koin = "io.insert-koin:koin-android:${Versions.koin}"
+    val startup = "androidx.startup:startup-runtime:${Versions.startup}"
+    val extAdd = "com.oratakashi:AndroidViewBinding:${Versions.extAdd}"
+    val roomRx3 = "androidx.room:room-rxjava3:${Versions.roomRx3}"
 
 
 }

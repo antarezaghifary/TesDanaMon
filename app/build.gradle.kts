@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.antareza.tesdanamon"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.antareza.tesdanamon"
@@ -21,13 +21,21 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "baseUrl", "\"https://jsonplaceholder.typicode.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
     }
     compileOptions {
@@ -40,6 +48,9 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+    }
+    buildFeatures {
+        buildConfig = true
     }
 
     testOptions {
@@ -68,11 +79,15 @@ dependencies {
     implementation(Deps.rxJava)
     implementation(Deps.rxBinding)
     implementation(Deps.glide)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(Deps.glideCompiler)
     implementation(Deps.pretty)
     implementation(Deps.dagger)
     kapt(Deps.hiltCompiler)
     kapt(Deps.hiltAndroidCompiler)
+    implementation(Deps.rxJava2)
     implementation(Deps.room)
     implementation(Deps.roomRuntime)
     implementation(Deps.roomRxJava)
@@ -83,5 +98,9 @@ dependencies {
     testImplementation(Deps.androidJunit)
     androidTestImplementation(Deps.espresso)
     androidTestImplementation(Deps.junit)
-
+    implementation(Deps.koin)
+    implementation(Deps.startup)
+    implementation(Deps.extAdd)
+    implementation(Deps.rxKotlin)
+    implementation(Deps.roomRx3)
 }
