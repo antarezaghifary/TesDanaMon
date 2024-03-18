@@ -16,4 +16,5 @@
     <string name="role">Role:</string>
     <string name="error_login">Eror Login</string>
     <string name="error_register">Eror Register</string>
+    <string name="error_empty">Field cannot be empty</string>
 </resources>
