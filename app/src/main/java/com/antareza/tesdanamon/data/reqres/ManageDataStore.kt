@@ -77,7 +77,7 @@ class ManageDataStore(
     }
 
     @SuppressLint("CheckResult")
-    override suspend fun updateUser(user: UserEntity): Flowable<Result<Unit>> {
+    override fun updateUser(user: UserEntity): Flowable<Result<Unit>> {
         return Flowable.create({ emitter ->
             db.updateUser(user)
                 .subscribeOn(Schedulers.io())

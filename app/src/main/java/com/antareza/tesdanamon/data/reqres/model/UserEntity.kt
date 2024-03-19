@@ -11,9 +11,8 @@ data class UserEntity(
     val email: String,
     val password: String,
     val role: Int,
-    val success: Boolean
 ){
     fun toUser(): User {
-        return User(id, username, email, password, role, success)
+        return User(id, username, email, password, role)
     }
 }

@@ -25,7 +25,9 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 
     private val adapterAdmin: AdminAdapter by lazy {
         AdminAdapter({ editData ->
-
+            val bundle = Bundle()
+            bundle.putParcelable(DATA, editData)
+            navigation?.navigate(R.id.action_adminFragment_to_adminEditUserFragment, bundle)
         }, { deleteData ->
             viewModel.deleteDataUser(deleteData.id)
         })
@@ -90,5 +92,9 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
                     ActivityCompat.finishAffinity(requireActivity())
                 }
             })
+    }
+
+    companion object {
+        var DATA = "data"
     }
 }
