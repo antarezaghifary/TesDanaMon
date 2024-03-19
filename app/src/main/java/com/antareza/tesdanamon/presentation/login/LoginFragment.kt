@@ -1,29 +1,21 @@
 package com.antareza.tesdanamon.presentation.login
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
+import com.antareza.tesdanamon.BuildConfig
 import com.antareza.tesdanamon.R
 import com.antareza.tesdanamon.data.reqres.model.User
-import com.antareza.tesdanamon.data.reqres.model.UserEntity
+import com.antareza.tesdanamon.data.reqres.web.WebSocketListener
 import com.antareza.tesdanamon.databinding.FragmentLoginBinding
 import com.antareza.tesdanamon.presentation.base.BaseFragment
 import com.antareza.tesdanamon.util.SharedPref
 import com.antareza.tesdanamon.util.UserRoleManage
 import com.antareza.tesdanamon.util.setError
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.handshake.ServerHandshake
+import okhttp3.Request
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.net.URI
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
@@ -32,8 +24,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private val viewModel: LoginViewModel by viewModel()
-
-    private var webSocketClient: WebSocketClient? = null
+    private var apiKeyWebSocketClient: String? = null
+    private val channelId = 1
 
 
     override fun setContent(savedInstanceState: Bundle?) {
@@ -90,26 +82,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun setupWebSocket() {
-        val uri = URI("wss://echo.websocket.org")
-        webSocketClient = object : WebSocketClient(uri) {
-            override fun onOpen(handshakedata: ServerHandshake?) = Unit
-            override fun onClose(code: Int, reason: String?, remote: Boolean) = Unit
-            override fun onError(ex: Exception?) = Unit
+        apiKeyWebSocketClient = BuildConfig.WEB_SOCKET_APIKEY
+        val req = Request.Builder()
+            .url("wss://free.blr2.piesocket.com/v3/$channelId?api_key=$apiKeyWebSocketClient&notify_self=1")
+            .build()
 
-            override fun onMessage(message: String?) {
-                runOnUiThread {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.websocket_message)
-                            .plus(message.orEmpty()),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
+        val client: okhttp3.OkHttpClient = okhttp3.OkHttpClient()
+        val listener: okhttp3.WebSocketListener = WebSocketListener()
+        client.newWebSocket(req, listener)
 
-        }
-
-        webSocketClient?.connect()
     }
 
     private fun onBackPressed() {

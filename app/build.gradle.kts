@@ -28,6 +28,7 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+            buildConfigField("String", "WEB_SOCKET_APIKEY", "\"xM9Soe9uzhoN8AZ81suvQdkFpgWbwuaMRKNvFyzG\"")
         }
         release {
             isMinifyEnabled = false
