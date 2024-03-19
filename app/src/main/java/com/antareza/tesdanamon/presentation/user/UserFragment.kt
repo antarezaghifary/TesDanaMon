@@ -1,21 +1,22 @@
 package com.antareza.tesdanamon.presentation.user
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.antareza.tesdanamon.R
 import com.antareza.tesdanamon.databinding.FragmentUserBinding
 import com.antareza.tesdanamon.domain.reqres.model.Photo
 import com.antareza.tesdanamon.presentation.base.BaseFragment
 import com.antareza.tesdanamon.util.SharedPref
 import com.antareza.tesdanamon.util.addObservers
-import com.oratakashi.viewbinding.core.tools.State
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class UserFragment : BaseFragment<FragmentUserBinding>(FragmentUserBinding::inflate),
     UserDataContract {
@@ -29,6 +30,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>(FragmentUserBinding::infl
         activity?.findNavController(R.id.nav_host_main)
     }
 
+    private var scrollPosition:Int = 0
 
     override fun setContent(savedInstanceState: Bundle?) {
         setAction()
@@ -46,11 +48,11 @@ class UserFragment : BaseFragment<FragmentUserBinding>(FragmentUserBinding::infl
 
     override fun setViewModel() {
         addObservers(UserObserver(this, viewModel))
-        viewModel.getPhotos(1, 30)
+        viewModel.getPhotos(1)
     }
 
     override fun onGetPhotoLoading() {
-        Toast.makeText(requireContext(), getString(R.string.loading), Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show()
     }
 
     override fun onGetPhotoSuccess(data: List<Photo>) {
@@ -60,8 +62,8 @@ class UserFragment : BaseFragment<FragmentUserBinding>(FragmentUserBinding::infl
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
             adapter = adapterUser
+            setupRecyclerView()
         }
-
     }
 
     override fun onGetPhotoEmpty() {
@@ -71,6 +73,29 @@ class UserFragment : BaseFragment<FragmentUserBinding>(FragmentUserBinding::infl
 
     override fun onGetPhotoFailure(error: Throwable) {
         Toast.makeText(requireContext(), "Error $error", Toast.LENGTH_LONG).show()
+    }
+
+    private fun setupRecyclerView() = with(binding) {
+        rvDashboard.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                val notAtBeginning = firstVisibleItemPosition >= 0
+                scrollPosition = recyclerView.computeVerticalScrollOffset()
+                if (!viewModel.isLoading.value!! &&
+                    visibleItemCount.plus(firstVisibleItemPosition) >= totalItemCount &&
+                    notAtBeginning
+                ) {
+                    //findLastVisibleItemPosition
+                    viewModel.getPhotos(viewModel.currenPage.value?.inc() ?: 1)
+                }
+            }
+        })
+        rvDashboard.scrollToPosition(scrollPosition)
     }
 
     private fun onBackPressed() {

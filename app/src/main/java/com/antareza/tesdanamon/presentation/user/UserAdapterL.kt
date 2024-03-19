@@ -29,9 +29,11 @@ class UserAdapterL : RecyclerView.Adapter<ViewHolder<ItemAdapterPhotoBinding>>()
     }
 
     fun submitData(data: List<Photo>) {
-        this.data.clear()
+        val sumData = data.size
+//        this.data.clear()
         this.data.addAll(data)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(sumData, data.size)
+//        notifyDataSetChanged()
     }
 
     private val data: MutableList<Photo> by lazy {
