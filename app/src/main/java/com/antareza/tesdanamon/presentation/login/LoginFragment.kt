@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
 import com.antareza.tesdanamon.R
 import com.antareza.tesdanamon.data.reqres.model.User
 import com.antareza.tesdanamon.data.reqres.model.UserEntity
@@ -18,7 +20,10 @@ import com.antareza.tesdanamon.presentation.base.BaseFragment
 import com.antareza.tesdanamon.util.SharedPref
 import com.antareza.tesdanamon.util.UserRoleManage
 import com.antareza.tesdanamon.util.setError
+import org.java_websocket.client.WebSocketClient
+import org.java_websocket.handshake.ServerHandshake
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.net.URI
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
@@ -28,10 +33,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModel()
 
+    private var webSocketClient: WebSocketClient? = null
+
 
     override fun setContent(savedInstanceState: Bundle?) {
         setAction()
         onBackPressed()
+        setupWebSocket()
     }
 
 
@@ -79,6 +87,29 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         } else {
             setError(getString(R.string.error_login), requireContext())
         }
+    }
+
+    private fun setupWebSocket() {
+        val uri = URI("wss://echo.websocket.org")
+        webSocketClient = object : WebSocketClient(uri) {
+            override fun onOpen(handshakedata: ServerHandshake?) = Unit
+            override fun onClose(code: Int, reason: String?, remote: Boolean) = Unit
+            override fun onError(ex: Exception?) = Unit
+
+            override fun onMessage(message: String?) {
+                runOnUiThread {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.websocket_message)
+                            .plus(message.orEmpty()),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+        }
+
+        webSocketClient?.connect()
     }
 
     private fun onBackPressed() {

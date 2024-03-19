@@ -103,4 +103,5 @@ dependencies {
     implementation(Deps.extAdd)
     implementation(Deps.rxKotlin)
     implementation(Deps.roomRx3)
+    implementation(Deps.webSocket)
 }
