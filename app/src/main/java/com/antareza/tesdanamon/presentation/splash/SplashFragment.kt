@@ -13,6 +13,8 @@ import androidx.navigation.findNavController
 import com.antareza.tesdanamon.R
 import com.antareza.tesdanamon.databinding.FragmentSplashBinding
 import com.antareza.tesdanamon.presentation.base.BaseFragment
+import com.antareza.tesdanamon.util.SharedPref
+import com.antareza.tesdanamon.util.UserRoleManage
 import com.oratakashi.viewbinding.core.tools.visible
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
@@ -21,7 +23,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         activity?.findNavController(R.id.nav_host_main)
     }
 
+    private val userSharedPref by lazy { SharedPref(requireContext()) }
+
     override fun setContent(savedInstanceState: Bundle?) {
+
+        val isLogIn = userSharedPref.getIsLogIn()
+        val isRole = userSharedPref.getDataUser().role
 
         goEdgeToEdge()
 
@@ -37,7 +44,15 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         }
 
         Handler().postDelayed({
-            nav?.navigate(R.id.action_splashFragment_to_loginFragment)
+            if (isLogIn) {
+                if (isRole == UserRoleManage.ADMIN.value) {
+                    nav?.navigate(R.id.action_splashFragment_to_adminFragment)
+                } else {
+                    nav?.navigate(R.id.action_splashFragment_to_userFragment)
+                }
+            } else {
+                nav?.navigate(R.id.action_splashFragment_to_loginFragment)
+            }
         }, 4000)
     }
 

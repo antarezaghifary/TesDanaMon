@@ -1,6 +1,8 @@
 package com.antareza.tesdanamon.presentation.admin
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antareza.tesdanamon.R
 import com.antareza.tesdanamon.databinding.FragmentAdminBinding
 import com.antareza.tesdanamon.presentation.base.BaseFragment
+import com.antareza.tesdanamon.util.SharedPref
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -17,6 +20,8 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
     private val navigation: NavController? by lazy {
         activity?.findNavController(R.id.nav_host_main)
     }
+
+    private val userSharedPref by lazy { SharedPref(requireContext()) }
 
     private val adapterAdmin: AdminAdapter by lazy {
         AdminAdapter({ editData ->
@@ -31,6 +36,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         with(binding) {
             setAction()
             initObserver()
+            onBackPressed()
         }
     }
 
@@ -64,14 +70,25 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
     private fun setAction() {
         with(binding) {
             fabLogout.setOnClickListener {
-                // do something
+                userSharedPref.logout()
+                navigation?.navigate(R.id.action_adminFragment_to_loginFragment)
             }
         }
     }
 
     private fun refreshData() {
+        viewModel.getDataUser()
         val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
         ft.detach(this).attach(this).commit()
-        viewModel.getDataUser()
+    }
+
+    private fun onBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    ActivityCompat.finishAffinity(requireActivity())
+                }
+            })
     }
 }

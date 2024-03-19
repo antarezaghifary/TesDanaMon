@@ -17,6 +17,20 @@
             app:exitAnim="@anim/anim_slide_out_left"
             app:popEnterAnim="@anim/anim_slide_in_right"
             app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_splashFragment_to_userFragment"
+            app:destination="@id/userFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_splashFragment_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right" />
     </fragment>
 
 
@@ -68,6 +82,15 @@
         android:label="UserFragment"
         tools:layout="@layout/fragment_user">
 
+        <action
+            android:id="@+id/action_userFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
     <fragment
@@ -75,6 +98,14 @@
         android:name="com.antareza.tesdanamon.presentation.admin.AdminFragment"
         android:label="AdminFragment"
         tools:layout="@layout/fragment_admin">
+        <action
+            android:id="@+id/action_adminFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>
