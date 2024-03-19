@@ -30,7 +30,7 @@ object Versions {
     val rxKotlin ="3.0.1"
     val extAdd = "3.19.0"
     val roomRx3 = "2.6.1"
-
+    val webSocket = "1.5.2"
 }
 
 object Deps {
@@ -73,6 +73,7 @@ object Deps {
     val startup = "androidx.startup:startup-runtime:${Versions.startup}"
     val extAdd = "com.oratakashi:AndroidViewBinding:${Versions.extAdd}"
     val roomRx3 = "androidx.room:room-rxjava3:${Versions.roomRx3}"
+    val webSocket = "org.java-websocket:Java-WebSocket:${Versions.webSocket}"
 
 
 }
