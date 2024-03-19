@@ -13,6 +13,6 @@ interface ManageRepository {
     fun getUserByEmail(email: String): Single<User>
     fun getUserByUsername(username: String): Single<User>
     fun getUserByEmailAndPassword(email: String, password: String): Single<User>
-    suspend fun updateUser(user: UserEntity): Flowable<Result<Unit>>
+    fun updateUser(user: UserEntity): Flowable<Result<Unit>>
     fun deleteUserById(userId: Int): Flowable<Result<Unit>>
 }

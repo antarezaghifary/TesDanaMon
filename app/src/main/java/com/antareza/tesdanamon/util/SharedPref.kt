@@ -25,7 +25,6 @@ class SharedPref(val context: Context) {
         editor.putString(EMAIL, user.email)
         editor.putString(PASSWORD, user.password)
         editor.putInt(ROLE, user.role)
-        editor.putBoolean(SUCCESS, user.success)
         editor.commit()
         editor.apply()
     }
@@ -41,7 +40,6 @@ class SharedPref(val context: Context) {
             isSessionUser.getString(EMAIL, "") ?: "",
             isSessionUser.getString(PASSWORD, "") ?: "",
             isSessionUser.getInt(ROLE, 0),
-            isSessionUser.getBoolean(SUCCESS, false)
         )
     }
 

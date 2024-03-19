@@ -106,6 +106,29 @@
             app:popEnterAnim="@anim/anim_slide_in_right"
             app:popExitAnim="@anim/anim_slide_out_right"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_adminFragment_to_adminEditUserFragment"
+            app:destination="@id/adminEditUserFragment"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            app:popUpToInclusive="false"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminEditUserFragment"
+        android:name="com.antareza.tesdanamon.presentation.useredit.AdminEditUserFragment"
+        android:label="AdminEditUserFragment"
+        tools:layout="@layout/fragment_admin_edit_user">
+        <action
+            android:id="@+id/action_adminEditUserFragment_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

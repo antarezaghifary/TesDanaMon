@@ -6,6 +6,7 @@ import com.antareza.tesdanamon.presentation.admin.AdminViewModel
 import com.antareza.tesdanamon.presentation.login.LoginViewModel
 import com.antareza.tesdanamon.presentation.register.RegisterViewModel
 import com.antareza.tesdanamon.presentation.user.UserViewModel
+import com.antareza.tesdanamon.presentation.useredit.AdminEditUserViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,4 +21,5 @@ val reqresModule = module {
     viewModel { RegisterViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { AdminViewModel(get()) }
+    viewModel { AdminEditUserViewModel(get()) }
 }
