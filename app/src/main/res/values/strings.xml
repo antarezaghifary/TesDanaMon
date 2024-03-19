@@ -17,4 +17,6 @@
     <string name="error_login">Eror Login</string>
     <string name="error_register">Eror Register</string>
     <string name="error_empty">Field cannot be empty</string>
+    <string name="data_not_found">Data not found</string>
+    <string name="loading">Loading . . .</string>
 </resources>

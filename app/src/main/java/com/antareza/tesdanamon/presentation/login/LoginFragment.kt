@@ -1,10 +1,13 @@
 package com.antareza.tesdanamon.presentation.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.antareza.tesdanamon.R
@@ -12,6 +15,7 @@ import com.antareza.tesdanamon.data.reqres.model.User
 import com.antareza.tesdanamon.data.reqres.model.UserEntity
 import com.antareza.tesdanamon.databinding.FragmentLoginBinding
 import com.antareza.tesdanamon.presentation.base.BaseFragment
+import com.antareza.tesdanamon.util.SharedPref
 import com.antareza.tesdanamon.util.UserRoleManage
 import com.antareza.tesdanamon.util.setError
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,8 +28,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModel()
 
+
     override fun setContent(savedInstanceState: Bundle?) {
         setAction()
+        onBackPressed()
     }
 
 
@@ -51,12 +57,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun setViewModel() {
         viewModel.isSuccessLogin.observe(viewLifecycleOwner) {
             if (it != null) {
+                val userSharedPref = SharedPref(requireContext())
+                userSharedPref.saveIsLogIn(true)
+                userSharedPref.saveDataUser(it)
                 checkUserRole(it)
             } else {
                 setError(getString(R.string.error_login), requireContext())
             }
         }
-
     }
 
     private fun initObserver() = with(binding) {
@@ -71,5 +79,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         } else {
             setError(getString(R.string.error_login), requireContext())
         }
+    }
+
+    private fun onBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    finishAffinity(requireActivity())
+                }
+            })
     }
 }
