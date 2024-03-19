@@ -17,19 +17,27 @@ class UserViewModel(
 
     private val _photos: MutableLiveData<State<List<Photo>>> by liveData(State.default())
     val photos = _photos.immutable()
+    val isLoading: MutableLiveData<Boolean> by liveData(false)
+    val currenPage: MutableLiveData<Int> by liveData(1)
 
     @SuppressLint("CheckResult")
-    fun getPhotos(page: Int, limit: Int) {
+    fun getPhotos(page: Int) {
         _photos.postValue(State.loading())
-        repository.getPhotos(page, limit)
+        isLoading.postValue(true)
+        page.let {
+            currenPage.postValue(it)
+        }
+        repository.getPhotos(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ data ->
                 // Handle data
                 _photos.postValue(State.success(data))
+                isLoading.postValue(false)
             }, { error ->
                 // Handle error
                 _photos.postValue(State.fail(error, error.message ?: "Error"))
+                isLoading.postValue(false)
             }).let {
                 return@let it
             }

@@ -15,8 +15,8 @@ class ManageDataStore(
     private val api: PhotoApi,
     private val db: UserDao
 ) : ManageRepository {
-    override fun getPhotos(page: Int, limit: Int): Flowable<List<Photo>> =
-        api.getPhotos(page, limit)
+    override fun getPhotos(page: Int): Flowable<List<Photo>> =
+        api.getPhotos(page, 10, "albumId")
 
     @SuppressLint("CheckResult")
     override fun insertUser(user: User): Flowable<Unit> {

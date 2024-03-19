@@ -1,6 +1,5 @@
 package com.antareza.tesdanamon.data.reqres.web
 
-import com.antareza.tesdanamon.data.reqres.model.PhotoItem
 import com.antareza.tesdanamon.domain.reqres.model.Photo
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.GET
@@ -11,5 +10,6 @@ interface PhotoApiClient {
     fun getPhotos(
         @Query("_page") page: Int,
         @Query("_limit") limit: Int,
+        @Query("_sort") sort: String
     ): Flowable<List<Photo>>
 }

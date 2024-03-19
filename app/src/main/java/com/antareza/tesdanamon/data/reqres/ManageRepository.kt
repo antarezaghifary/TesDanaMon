@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 
 interface ManageRepository {
-    fun getPhotos(page: Int, limit: Int): Flowable<List<Photo>>
+    fun getPhotos(page: Int): Flowable<List<Photo>>
     fun insertUser(user: User): Flowable<Unit>
     fun getAllUsers(): Flowable<List<User>>
     fun getUserByEmail(email: String): Single<User>
