@@ -1,3 +1,5 @@
+import javassist.bytecode.Descriptor.rename
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -28,7 +30,11 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
-            buildConfigField("String", "WEB_SOCKET_APIKEY", "\"xM9Soe9uzhoN8AZ81suvQdkFpgWbwuaMRKNvFyzG\"")
+            buildConfigField(
+                "String",
+                "WEB_SOCKET_APIKEY",
+                "\"xM9Soe9uzhoN8AZ81suvQdkFpgWbwuaMRKNvFyzG\""
+            )
         }
         release {
             isMinifyEnabled = false
@@ -57,6 +63,33 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
+
+    packaging {
+        resources.excludes.addAll(
+            listOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.md",
+                "META-INF/NOTICE-notice.md",
+                "META-INF/DEPENDENCIES",
+                "META-INF/DEPENDENCIES.md",
+                "META-INF/DEPENDENCIES-dependencies.md",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-license.md",
+                "META-INF/LGPL2.1",
+                "META-INF/LGPL2.1.md",
+                "META-INF/LGPL2.1-lgpl2.1.md",
+                "META-INF/AL2.0",
+                "META-INF/AL2.0.md",
+                "META-INF/AL2.0-al2.0.md",
+                "META-INF/*.kotlin_module",
+                "META-INF/*.kotlin_builtins",
+            )
+        )
+    }
+
 }
 
 dependencies {
@@ -66,9 +99,19 @@ dependencies {
     implementation(Deps.appCompat)
     implementation(Deps.material)
     implementation(Deps.constraintLayout)
+
     implementation(Deps.junit)
+    implementation(Deps.mockk)
+    testImplementation(Deps.mockito)
+    androidTestImplementation(Deps.mockito)
+    implementation(Deps.ktCoroutine)
+    implementation(Deps.testJunit)
     implementation(Deps.testRunner)
+    implementation(Deps.testRuler)
     implementation(Deps.espresso)
+    implementation(Deps.espressoIntent)
+    implementation(Deps.mockito)
+
     implementation(Deps.navigationIu)
     implementation(Deps.navigationFragment)
     implementation(Deps.retrofit2)

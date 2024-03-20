@@ -6,11 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
-    @SerializedName("id") val id: Int = 0,
-    @SerializedName("username") val username: String = "",
-    @SerializedName("email") val email: String = "",
-    @SerializedName("password") val password: String = "",
-    @SerializedName("role") val role: Int = 0,
+    @SerializedName("id") var id: Int = 0,
+    @SerializedName("username") var username: String = "",
+    @SerializedName("email") var email: String = "",
+    @SerializedName("password") var password: String = "",
+    @SerializedName("role") var role: Int = 0,
 ) : Parcelable {
     fun toUserEntity(): UserEntity {
         return UserEntity(id, username, email, password, role)

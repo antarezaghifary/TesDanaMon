@@ -4,9 +4,17 @@ object Versions {
     val appCompat = "1.6.1"
     val material= "1.6.1"
     val constraintLayout = "2.1.4"
+
     val junit = "4.13.2"
-    val testRunner = "1.1.3"
-    val espresso = "3.4.0"
+    val mockk = "1.13.5"
+    val ktCoroutine = "1.5.2"
+    val extJunit = "1.1.5"
+    val testRunner = "1.5.2"
+    val testRuler = "1.5.0"
+    val espresso = "3.5.1"
+    val mockito = "4.0.0"
+
+    val webSocket = "1.5.2"
     val navigation = "2.5.3"
     val retrofit = "2.9.0"
     val gsonConverter = "2.9.0"
@@ -30,7 +38,7 @@ object Versions {
     val rxKotlin ="3.0.1"
     val extAdd = "3.19.0"
     val roomRx3 = "2.6.1"
-    val webSocket = "1.5.2"
+
 }
 
 object Deps {
@@ -39,9 +47,17 @@ object Deps {
     val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     val material = "com.google.android.material:material:${Versions.material}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+
     val junit = "junit:junit:${Versions.junit}"
+    val mockk = "io.mockk:mockk-android:${Versions.mockk}"
+    val ktCoroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.ktCoroutine}"
+    val testJunit = "androidx.test.ext:junit:${Versions.extJunit}"
     val testRunner = "androidx.test:runner:${Versions.testRunner}"
+    val testRuler = "androidx.test:rules:${Versions.testRuler}"
     val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    val espressoIntent = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
+    val mockito = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito}"
+
     val navigationIu = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
