@@ -1,33 +1,28 @@
 package com.antareza.tesdanamon.presentation.register
 
-import com.antareza.tesdanamon.data.reqres.ManageRepository
 import com.antareza.tesdanamon.data.reqres.MockManageRepository
 import com.antareza.tesdanamon.data.reqres.model.User
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.every
-import io.reactivex.rxjava3.core.Flowable
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.reactivex.rxjava3.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 
 class RegisterViewModelTest {
     private lateinit var viewModel: RegisterViewModel
-    private lateinit var manageRepository: ManageRepository
+
+    @RelaxedMockK
+    @MockK
+    private lateinit var manageRepository: MockManageRepository
     private lateinit var testScheduler: TestScheduler
 
     @Before
     fun setUp() {
+        MockKAnnotations.init(this)
         if (this::manageRepository.isInitialized) manageRepository = MockManageRepository()
-        manageRepository = MockManageRepository()
-//        manageRepository = mock(ManageRepository::class.java)
         testScheduler = TestScheduler()
-        MockitoAnnotations.openMocks(this)
         viewModel = RegisterViewModel(manageRepository)
 
     }
@@ -39,6 +34,7 @@ class RegisterViewModelTest {
 
     @Test
     fun register() {
+//        coEvery { manageRepository.insertUser(any()) } returns Flowable.just(Unit)
         val user = User(
             id = 1,
             email = "email@mail.com",
@@ -46,12 +42,12 @@ class RegisterViewModelTest {
             password = "123456",
             role = 1,
         )
-        `when`(manageRepository.insertUser(user)).thenReturn(Flowable.just(Unit))
 
-//        every { manageRepository.insertUser(user) } returns Flowable.just(Unit)
 
         // When
         val testObserver = manageRepository.insertUser(user).test()
+        viewModel.register(user)
+//        viewModel.isSuccessRegister.observeForever {  }
 
         // Then
         testObserver.assertComplete()
@@ -61,5 +57,6 @@ class RegisterViewModelTest {
 
     @Test
     fun isSuccessRegister() {
+
     }
 }
